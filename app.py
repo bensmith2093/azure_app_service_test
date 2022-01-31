@@ -1,11 +1,12 @@
 from flask import Flask
 import psycopg2
+import os
 
 app = Flask(__name__)
 
 
 def connect_to_database():
-    conn_string = "dbname='postgres-example-db' user='psqladmin@postgres-example-db-server' host='postgres-example-db-server.postgres.database.azure.com' password='newpassword123!!!!!' port='5432' sslmode='require'"
+    conn_string = os.environ['DB_CONN_STRING']
     conn = psycopg2.connect(conn_string)
     cursor = conn.cursor()
     cursor.execute("SELECT 1")
@@ -15,6 +16,7 @@ def connect_to_database():
 def homepage():
 
     connected = True
+    print('I HAVE STARTED.')
 
     try:
         connect_to_database()
